@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train the Trainer - Day 1 Interactive Exam</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: '#ec4899',
+                        brandPinkHover: '#db2777',
+                        brandPinkLight: '#fce7f3'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .signature-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        /* Print Styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            .card-shadow {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0;
+            }
+        }
+        /* Drag & Drop Reorder Styling */
+        .reorder-item {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        .reorder-item:active {
+            cursor: grabbing;
+        }
+        .reorder-item.dragging {
+            opacity: 0.5;
+            background-color: #fce7f3;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Top Navigation / Header Banner -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-pink-100 text-brandPink p-2 rounded-lg font-bold text-xl">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-900 text-lg sm:text-xl leading-tight">TRAIN THE TRAINER</h1>
+                    <p class="text-xs text-slate-500 font-medium">DAY 1: Understand the Trainer | Session 1</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <!-- User Badge (Hidden on Screen 1) -->
+                <div id="userBadgeHeader" class="hidden text-right border-r border-slate-200 pr-6">
+                    <span class="text-xs text-slate-400 block font-medium">STUDENT</span>
+                    <span id="headerStudentName" class="text-sm font-semibold text-slate-700">Guest</span>
+                </div>
+                
+                <!-- Signature -->
+                <div class="text-right">
+                    <span class="text-xs text-slate-400 block font-medium">INSTRUCTOR</span>
+                    <span class="signature-font text-xl font-bold" style="color: #ec4899;">Created by Ms. Maria</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- ================= SCREEN 1: REGISTRATION & REVIEW ================= -->
+        <section id="screenRegistration" class="space-y-8">
+            <!-- Welcome Banner -->
+            <div class="bg-gradient-to-r from-pink-500 to-rose-600 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 -mt-4 -mr-4 opacity-10 pointer-events-none">
+                    <i class="fa-solid fa-graduation-cap text-9xl"></i>
+                </div>
+                <div class="max-w-3xl relative z-10 space-y-3">
+                    <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Session 1 Assessment</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold">Welcome to Your Day 1 Exam</h2>
+                    <p class="text-pink-100 text-sm sm:text-base leading-relaxed">
+                        This interactive assessment evaluates your understanding of the foundational trainer mindset, adult learning theories (Andragogy), the ADDIE framework, and trainer roles.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Registration Form Card -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-id-card text-brandPink"></i> Student Registration
+                    </h3>
+                    <p class="text-sm text-slate-500">Please enter your official details to begin the exam.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="inputFullName" class="block text-sm font-semibold text-slate-700 mb-2">Full Name <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="inputFullName" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brandPink focus:border-brandPink outline-none text-sm transition" placeholder="e.g. John Doe" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="inputEmail" class="block text-sm font-semibold text-slate-700 mb-2">Official Email Address <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" id="inputEmail" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brandPink focus:border-brandPink outline-none text-sm transition" placeholder="e.g. john.doe@example.com" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam Instructions Box -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-blue-500"></i> Important Exam Instructions:
+                    </h4>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc list-inside">
+                        <li><strong>Questions:</strong> 30 items (Multiple Choice, Identification, Fill in Blank, Correct Sentence, Dropdown, Reordering).</li>
+                        <li><strong>Time Limit:</strong> 30 Minutes. The exam will automatically submit when time expires.</li>
+                        <li><strong>Passing Score:</strong> 30 / 30 points required to achieve 100% mastery.</li>
+                        <li><strong>Auto-Submission:</strong> Results will be automatically logged and sent to <span class="font-bold text-slate-800">mariaeftongga@gmail.com</span> upon completion.</li>
+                        <li><strong>Score Report:</strong> After submission, save your score report as a PDF and upload it to the classroom assignment tab.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COLLAPSIBLE STUDY GUIDE / REVIEWER -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <button id="btnToggleReviewer" onclick="toggleReviewer()" class="w-full p-6 text-left flex justify-between items-center hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-amber-100 text-amber-600 p-2.5 rounded-lg">
+                            <i class="fa-solid fa-book-open text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">📚 Quick Review Before You Begin</h3>
+                            <p class="text-xs text-slate-500">Click to expand/collapse the Day 1 study guide</p>
+                        </div>
+                    </div>
+                    <span id="reviewerIcon" class="text-slate-400 text-xl"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+
+                <div id="reviewerContent" class="hidden px-6 pb-8 border-t border-slate-100 space-y-6 pt-6 text-slate-700 text-sm leading-relaxed">
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-6">
+                        <p class="text-amber-800 text-xs font-semibold">
+                            ⚠️ Recommended: Review the core concepts below thoroughly before unlocking the exam!
+                        </p>
+                    </div>
+
+                    <!-- Reviewer Sections Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Section 1 & 2 -->
+                        <div class="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 border-b pb-2 border-slate-200 text-brandPink">1. What is Training? & Differences</h4>
+                            <p class="text-xs"><strong>Training:</strong> A structured process of developing knowledge, skills, and attitudes to improve performance.</p>
+                            <p class="text-xs font-semibold text-slate-800 bg-white p-2 rounded border">Information ≠ Learning ≠ Performance</p>
+                            <ul class="text-xs space-y-1 list-disc list-inside text-slate-600">
+                                <li><strong>Teaching:</strong> Helping people understand knowledge.</li>
+                                <li><strong>Training:</strong> Developing knowledge & skills for performance.</li>
+                                <li><strong>Coaching:</strong> Guidance & practice to improve.</li>
+                                <li><strong>Facilitation:</strong> Helping a group learn, discuss & solve problems.</li>
+                                <li><strong>Mentoring:</strong> Sharing experience for long-term growth.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 3 & 4 -->
+                        <div class="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 border-b pb-2 border-slate-200 text-brandPink">2. The ADDIE Cycle & 5 Trainer Roles</h4>
+                            <p class="text-xs"><strong>ADDIE Framework:</strong></p>
+                            <p class="text-xs font-semibold text-slate-800 bg-white p-2 rounded border">Analyze → Design → Develop → Implement → Evaluate</p>
+                            <p class="text-xs"><strong>5 Core Trainer Roles:</strong></p>
+                            <ul class="text-xs space-y-1 list-disc list-inside text-slate-600">
+                                <li>🎤 <strong>Instructor:</strong> Provides knowledge & demonstrates skills.</li>
+                                <li>🤝 <strong>Facilitator:</strong> Creates participation & discussion.</li>
+                                <li>🧭 <strong>Coach:</strong> Helps learners improve via feedback.</li>
+                                <li>📋 <strong>Assessor:</strong> Checks if competency is achieved.</li>
+                                <li>📊 <strong>Evaluator:</strong> Determines if training worked.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 5 & 6 & 7 -->
+                        <div class="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 border-b pb-2 border-slate-200 text-brandPink">3. Andragogy (Knowles' 5 Principles)</h4>
+                            <ul class="text-xs space-y-1.5 list-disc list-inside text-slate-600">
+                                <li><strong>Self-Concept:</strong> Adults want control over learning.</li>
+                                <li><strong>Experience:</strong> Adults bring prior knowledge.</li>
+                                <li><strong>Readiness:</strong> Connects to current roles/needs.</li>
+                                <li><strong>Orientation:</strong> Problem-centered learning.</li>
+                                <li><strong>Internal Motivation:</strong> Driven by personal growth/satisfaction.</li>
+                            </ul>
+                            <div class="bg-pink-50 p-2.5 rounded text-xs text-brandPink font-semibold">
+                                WIIFM: "What's In It For Me?" - Connect content directly to personal value!
+                            </div>
+                        </div>
+
+                        <!-- Section 8, 9, 10 & 11 -->
+                        <div class="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 border-b pb-2 border-slate-200 text-brandPink">4. Retention & Multi-Method Delivery</h4>
+                            <p class="text-xs"><strong>Multi-Method Flow:</strong></p>
+                            <p class="text-xs font-semibold text-slate-800 bg-white p-2 rounded border">Explain → Show → Discuss → Practice → Reflect</p>
+                            <p class="text-xs"><strong>Retention Strategies:</strong></p>
+                            <ul class="text-xs space-y-1 list-disc list-inside text-slate-600">
+                                <li><strong>Spacing:</strong> Review information over time.</li>
+                                <li><strong>Retrieval Practice:</strong> Active recall vs simple reading.</li>
+                                <li><strong>Storytelling:</strong> Memorable scenarios.</li>
+                                <li><strong>Application:</strong> Real work connection.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Exam Action Button -->
+            <div class="text-center pt-4">
+                <button id="btnStartExam" onclick="startExam()" disabled class="w-full sm:w-auto px-10 py-4 bg-slate-300 text-slate-500 font-bold text-base rounded-xl cursor-not-allowed shadow-none transition-all duration-200 flex items-center justify-center gap-3 mx-auto">
+                    <span>Start Interactive Assessment</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p id="startBtnHint" class="text-xs text-slate-400 mt-2">Please fill in your name and email to enable the start button.</p>
+            </div>
+        </section>
+
+
+        <!-- ================= SCREEN 2: INTERACTIVE ASSESSMENT ================= -->
+        <section id="screenAssessment" class="hidden space-y-6">
+            <!-- Top Controls & Timer Bar -->
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex flex-wrap justify-between items-center gap-4">
+                <!-- Question Counter & Badges -->
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200">
+                        Question <span id="currentQNum">1</span> of <span id="totalQNum">30</span>
+                    </span>
+                    <span id="qTypeBadge" class="text-xs font-semibold bg-pink-100 text-brandPink px-2.5 py-1 rounded-md">
+                        Multiple Choice
+                    </span>
+                    <span id="qDifficultyBadge" class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-md">
+                        Easy
+                    </span>
+                </div>
+
+                <!-- Timer -->
+                <div class="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl shadow-inner font-mono text-base font-bold">
+                    <i class="fa-solid fa-stopwatch text-brandPink"></i>
+                    <span id="timerDisplay">30:00</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                <div id="progressBar" class="bg-brandPink h-2.5 rounded-full transition-all duration-300" style="width: 3.33%;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Left Main Question Container (3 Cols) -->
+                <div class="lg:col-span-3 space-y-6">
+                    <div id="questionCard" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm min-h-[380px] flex flex-col justify-between">
+                        <!-- Question Header & Text -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start gap-4 border-b border-slate-100 pb-3">
+                                <span id="qConceptLabel" class="text-xs font-bold uppercase tracking-wider text-slate-400">Concept: Trainer Mindset</span>
+                                <span class="text-xs text-slate-400 font-mono">ID: <span id="qIdText">Q1</span></span>
+                            </div>
+                            
+                            <h3 id="qText" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                                Loading Question...
+                            </h3>
+                            
+                            <!-- Question Interactive Container -->
+                            <div id="interactiveArea" class="pt-4 space-y-3">
+                                <!-- Dynamic Controls Rendered via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Internal Question Footer Controls -->
+                        <div class="pt-6 border-t border-slate-100 flex justify-between items-center gap-4 mt-6">
+                            <button id="btnPrevQ" onclick="navigateQuestion(-1)" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition flex items-center gap-2">
+                                <i class="fa-solid fa-chevron-left"></i> Previous
+                            </button>
+                            
+                            <div class="flex gap-2">
+                                <button id="btnNextQ" onclick="navigateQuestion(1)" class="px-6 py-2.5 bg-brandPink hover:bg-brandPinkHover text-white font-semibold text-sm rounded-xl transition flex items-center gap-2">
+                                    Next <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                                <button id="btnSubmitTrigger" onclick="openSubmitModal()" class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl transition flex items-center gap-2">
+                                    Submit Exam <i class="fa-solid fa-paper-plane text-brandPink"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Question Navigation Palette (1 Col) -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                        <h4 class="text-sm font-bold text-slate-900 flex items-center justify-between">
+                            <span>Question Palette</span>
+                            <span class="text-xs font-normal text-slate-500"><span id="paletteAnsweredCount">0</span>/30 Answered</span>
+                        </h4>
+
+                        <!-- Grid 1-30 -->
+                        <div id="questionGrid" class="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2">
+                            <!-- Buttons rendered via JS -->
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs text-slate-500">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-slate-200 inline-block"></span> Unanswered
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-brandPink inline-block"></span> Answered
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full border-2 border-slate-900 inline-block"></span> Current
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SCREEN 3: RESULTS & SCORE REPORT ================= -->
+        <section id="screenResults" class="hidden space-y-8">
+            <!-- Results Header / Summary Card -->
+            <div id="scoreReportHeader" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm card-shadow space-y-6">
+                <div class="flex flex-wrap justify-between items-start gap-4 border-b border-slate-100 pb-6">
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <span id="passFailBadge" class="px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase bg-emerald-100 text-emerald-800">
+                                PASS
+                            </span>
+                            <span class="text-xs text-slate-400 font-mono">OFFICIAL SCORE REPORT</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Train the Trainer - Day 1 Assessment</h2>
+                        <p class="text-xs text-slate-500 mt-1">Session 1: Understand the Trainer</p>
+                    </div>
+
+                    <div class="text-right">
+                        <p class="signature-font text-2xl font-bold text-brandPink">Created by Ms. Maria</p>
+                        <p class="text-xs text-slate-400" id="reportDate">Date: August 27, 2026</p>
+                    </div>
+                </div>
+
+                <!-- Student Details Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-400 block font-medium">STUDENT NAME</span>
+                        <span id="reportStudentName" class="font-bold text-slate-800 text-sm">--</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block font-medium">EMAIL ADDRESS</span>
+                        <span id="reportStudentEmail" class="font-bold text-slate-800 text-sm">--</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block font-medium">TIME TAKEN</span>
+                        <span id="reportTimeTaken" class="font-bold text-slate-800 text-sm">--</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block font-medium">AUTO-SUBMIT STATUS</span>
+                        <span id="emailStatusBadge" class="font-semibold text-emerald-600 flex items-center gap-1 mt-0.5">
+                            <i class="fa-solid fa-circle-check"></i> Logged & Emailed
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Score Dashboard Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-900 text-white p-5 rounded-xl space-y-1">
+                        <span class="text-xs text-slate-400 uppercase font-semibold">Final Score</span>
+                        <p class="text-3xl sm:text-4xl font-extrabold text-brandPink"><span id="reportScore">0</span> / 30</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-1">
+                        <span class="text-xs text-slate-500 uppercase font-semibold">Percentage</span>
+                        <p id="reportPercentage" class="text-3xl sm:text-4xl font-extrabold text-slate-900">0%</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-1">
+                        <span class="text-xs text-slate-500 uppercase font-semibold">Accuracy Breakdown</span>
+                        <div class="flex justify-center items-center gap-4 text-xs font-bold pt-1">
+                            <span class="text-emerald-600"><i class="fa-solid fa-check"></i> <span id="reportCorrect">0</span> Correct</span>
+                            <span class="text-rose-600"><i class="fa-solid fa-xmark"></i> <span id="reportIncorrect">0</span> Wrong</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classroom Upload Alert -->
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-xl flex items-start gap-3 no-print">
+                    <i class="fa-solid fa-file-pdf text-amber-500 text-xl mt-0.5"></i>
+                    <div class="space-y-1">
+                        <h4 class="text-sm font-bold text-amber-900">📄 IMPORTANT: SAVE YOUR SCORE REPORT</h4>
+                        <p class="text-xs text-amber-800 leading-relaxed">
+                            1. Click <strong>Print / Save as PDF</strong> below.<br>
+                            2. Choose <strong>"Save as PDF"</strong> in your browser's print dialog.<br>
+                            3. Upload the PDF file directly to the designated Assignments section in your online classroom.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 pt-2 no-print">
+                    <button onclick="window.print()" class="px-6 py-3 bg-brandPink hover:bg-brandPinkHover text-white font-bold text-sm rounded-xl transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-print"></i> Print / Save as PDF
+                    </button>
+                    <button onclick="scrollToReview()" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Review Answers Below
+                    </button>
+                    <button onclick="confirmRetake()" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition flex items-center gap-2 ml-auto">
+                        <i class="fa-solid fa-rotate-right"></i> Retake Test
+                    </button>
+                </div>
+            </div>
+
+            <!-- DETAILED ANSWER REVIEW SECTION -->
+            <div id="reviewSection" class="space-y-6">
+                <div class="border-b border-slate-200 pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brandPink"></i> Detailed Answer Review
+                    </h3>
+                    <p class="text-xs text-slate-500">Examine correct answers, your submissions, and comprehensive instructional explanations for all 30 items.</p>
+                </div>
+
+                <!-- Dynamic Item Review Cards -->
+                <div id="detailedReviewContainer" class="space-y-6">
+                    <!-- Cards populated via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 no-print">
+        <p>© 2026 Train the Trainer Certification. Created by Ms. Maria | All Rights Reserved.</p>
+    </footer>
+
+
+    <!-- ================= SUBMIT CONFIRMATION MODAL ================= -->
+    <div id="submitModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
+            <div class="flex items-center gap-3 text-amber-500">
+                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                <h3 class="text-lg font-bold text-slate-900">Confirm Exam Submission</h3>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-xl space-y-2 text-xs text-slate-600 border border-slate-200">
+                <div class="flex justify-between">
+                    <span>Answered Questions:</span>
+                    <span id="modalAnswered" class="font-bold text-slate-900">0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Unanswered Questions:</span>
+                    <span id="modalUnanswered" class="font-bold text-rose-600">0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Remaining Time:</span>
+                    <span id="modalTime" class="font-bold text-slate-900">30:00</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500">
+                Are you sure you want to finish and submit your exam? Once submitted, answers cannot be changed.
+            </p>
+
+            <div class="flex gap-3 justify-end pt-2">
+                <button onclick="closeSubmitModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+                    Return to Exam
+                </button>
+                <button onclick="confirmSubmitExam()" class="px-5 py-2.5 bg-brandPink hover:bg-brandPinkHover text-white font-bold text-xs rounded-xl transition">
+                    Yes, Submit Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        /* -------------------------------------------------------------------------
+           1. QUESTION BANK (30 Items Strictly from Day 1 Summary Content)
+           ------------------------------------------------------------------------- */
+        const questionsData = [
+            {
+                id: 1,
+                type: "mcq",
+                difficulty: "Easy",
+                concept: "What Is Training?",
+                question: "According to Day 1, what is the core definition of Training?",
+                options: [
+                    "A process of talking in front of a room to transfer information.",
+                    "A structured process of developing knowledge, skills, and attitudes to improve performance.",
+                    "A informal gathering to discuss daily workplace tasks.",
+                    "An academic routine designed exclusively to test theoretical concepts."
+                ],
+                correctAnswer: 1,
+                explanation: "Training is defined strictly as a structured process of developing knowledge, skills, and attitudes to improve performance—not merely talking or sharing information.",
+                learningObjective: "Understand the core definition and primary objective of professional training."
+            },
+            {
+                id: 2,
+                type: "fill_in_blank",
+                difficulty: "Easy",
+                concept: "Core Training Truth",
+                question: "Complete the Day 1 foundational formula: Giving Information ≠ Learning ≠ ____________.",
+                correctAnswer: "performance",
+                explanation: "The summary emphasizes that Information ≠ Learning ≠ Performance. Giving information is only the beginning.",
+                learningObjective: "Recognize that information delivery does not automatically translate to workplace performance."
+            },
+            {
+                id: 3,
+                type: "dropdown",
+                difficulty: "Moderate",
+                concept: "Training vs. Other Roles",
+                question: "Select the correct role for the focus described: 'Helping someone improve through guidance and practice'.",
+                options: ["Teaching", "Training", "Coaching", "Facilitation", "Mentoring"],
+                correctAnswer: "Coaching",
+                explanation: "Coaching specifically focuses on helping someone improve through individual guidance and practice.",
+                learningObjective: "Differentiate between Teaching, Coaching, Training, Facilitation, and Mentoring."
+            },
+            {
+                id: 4,
+                type: "identification",
+                difficulty: "Moderate",
+                concept: "Training vs. Other Roles",
+                question: "Identify the approach focused on 'Sharing experience and supporting long-term development'.",
+                correctAnswer: "mentoring",
+                explanation: "Mentoring is defined as sharing long-term experience and supporting personal/professional development.",
+                learningObjective: "Identify mentoring based on its focus on experience sharing and long-term support."
+            },
+            {
+                id: 5,
+                type: "mcq",
+                difficulty: "Scenario",
+                concept: "Training vs. Facilitation",
+                question: "A group of senior staff needs to analyze a workflow bottleneck and solve a problem together. Which approach is most appropriate?",
+                options: [
+                    "Teaching",
+                    "Coaching",
+                    "Facilitation",
+                    "Mentoring"
+                ],
+                correctAnswer: 2,
+                explanation: "Facilitation is helping a group learn, discuss, and solve problems together.",
+                learningObjective: "Apply the correct delivery approach based on situational learner needs."
+            },
+            {
+                id: 6,
+                type: "reorder",
+                difficulty: "Moderate",
+                concept: "ADDIE Cycle",
+                question: "Arrange the 5 phases of the ADDIE Instructional Design framework in the correct order from start to finish.",
+                options: [
+                    "Develop (What materials are needed?)",
+                    "Analyze (What is the need?)",
+                    "Evaluate (Did it work?)",
+                    "Design (What should it look like?)",
+                    "Implement (Deliver the training)"
+                ],
+                correctAnswer: [
+                    "Analyze (What is the need?)",
+                    "Design (What should it look like?)",
+                    "Develop (What materials are needed?)",
+                    "Implement (Deliver the training)",
+                    "Evaluate (Did it work?)"
+                ],
+                explanation: "The correct sequence for ADDIE is: Analyze -> Design -> Develop -> Implement -> Evaluate.",
+                learningObjective: "Recall and order the sequence of the ADDIE cycle."
+            },
+            {
+                id: 7,
+                type: "mcq",
+                difficulty: "Challenging",
+                concept: "ADDIE Memory Hook",
+                question: "What core warning is highlighted by the Day 1 Memory Hook regarding ADDIE?",
+                options: [
+                    "Never evaluate training until 6 months have passed.",
+                    "Don't build the training before you understand the problem.",
+                    "Always design PowerPoint slides before defining objectives.",
+                    "Implementation is the only step that really matters."
+                ],
+                correctAnswer: 1,
+                explanation: "The ADDIE memory hook explicitly warns: 'Don't build the training before you understand the problem.'",
+                learningObjective: "Understand the primacy of Analysis before Development in Instructional Design."
+            },
+            {
+                id: 8,
+                type: "identification",
+                difficulty: "Easy",
+                concept: "Trainer Roles",
+                question: "Which of the 5 Trainer Roles is defined as: 'Creates participation and discussion'?",
+                correctAnswer: "facilitator",
+                explanation: "The Facilitator hat creates participation and group discussion rather than just delivering content.",
+                learningObjective: "Identify the Facilitator role among the 5 core roles."
+            },
+            {
+                id: 9,
+                type: "correct_sentence",
+                difficulty: "Moderate",
+                concept: "Trainer Roles",
+                question: "Correct the bold term in statement: 'As an **Evaluator**, the trainer checks whether individual learners have achieved the required competency.'",
+                options: ["Assessor", "Instructor", "Coach", "Facilitator"],
+                correctAnswer: "Assessor",
+                explanation: "An Assessor checks individual learner competency, while an Evaluator determines whether the training program itself worked.",
+                learningObjective: "Distinguish between the Assessor role and Evaluator role."
+            },
+            {
+                id: 10,
+                type: "mcq",
+                difficulty: "Reasoning",
+                concept: "Trainer Reality Check",
+                question: "According to the Day 1 'Trainer Reality Check', when does some of your best training happen?",
+                options: [
+                    "When you speak continuously for two hours without interruption.",
+                    "When you stop talking and let the learners do the work.",
+                    "When you use over 100 slides in a single session.",
+                    "When learners memorize all technical definitions perfectly."
+                ],
+                correctAnswer: 1,
+                explanation: "The Trainer Reality Check states: 'You aren't always the person talking. Sometimes your best training happens when you stop talking and let the learners do the work.'",
+                learningObjective: "Adopt learner-centered facilitation over lecture-heavy presentation."
+            },
+            {
+                id: 11,
+                type: "dropdown",
+                difficulty: "Easy",
+                concept: "Professional Trainer Mindset",
+                question: "Select the quality that matches: 'Understand that learners bring different experiences, fears, abilities, and expectations'.",
+                options: ["Confidence", "Adaptability", "Empathy", "Focus"],
+                correctAnswer: "Empathy",
+                explanation: "Empathy means understanding the diverse backgrounds, fears, abilities, and expectations learners bring.",
+                learningObjective: "Identify the core mindset qualities of a professional trainer."
+            },
+            {
+                id: 12,
+                type: "mcq",
+                difficulty: "Reasoning",
+                concept: "Trainer Mindset - Confidence",
+                question: "How does Day 1 define a truly 'confident trainer' when faced with an unexpected question?",
+                options: [
+                    "A confident trainer knows every single answer instantly.",
+                    "A confident trainer pretends to know the answer to avoid losing authority.",
+                    "A confident trainer doesn't need to know everything; they know how to handle what they don't know.",
+                    "A confident trainer ignores the student's question and moves to the next slide."
+                ],
+                correctAnswer: 2,
+                explanation: "Day 1 explicitly notes: 'A confident trainer doesn't need to know everything. A confident trainer knows how to handle what they don't know.'",
+                learningObjective: "Internalize authentic trainer confidence in handling knowledge gaps."
+            },
+            {
+                id: 13,
+                type: "mcq",
+                difficulty: "Moderate",
+                concept: "Adult Learning",
+                question: "Day 1 emphasizes that adults are NOT empty containers waiting to be filled. Which of the following do adults bring to training?",
+                options: [
+                    "Experience, opinions, habits, and existing knowledge.",
+                    "Zero prior knowledge or opinions.",
+                    "An absolute willingness to accept all lecture material uncritically.",
+                    "No personal responsibilities or fears."
+                ],
+                correctAnswer: 0,
+                explanation: "Adults bring rich experience, opinions, habits, existing knowledge, expectations, and sometimes resistance.",
+                learningObjective: "Recognize the characteristics and background adult learners bring to a classroom."
+            },
+            {
+                id: 14,
+                type: "dropdown",
+                difficulty: "Moderate",
+                concept: "Knowles' Andragogy",
+                question: "Select Knowles' principle: 'Adults want to have some control over their learning.'",
+                options: ["Self-Concept", "Experience", "Readiness to Learn", "Orientation to Learning", "Internal Motivation"],
+                correctAnswer: "Self-Concept",
+                explanation: "Self-Concept dictates that adult learners are autonomous and desire self-direction/control over learning.",
+                learningObjective: "Map Knowles' 5 Principles of Andragogy to their definitions."
+            },
+            {
+                id: 15,
+                type: "fill_in_blank",
+                difficulty: "Moderate",
+                concept: "Knowles' Andragogy",
+                question: "According to Knowles' principle of Orientation to Learning, adults tend to prefer learning that helps them solve real ____________.",
+                correctAnswer: "problems",
+                explanation: "Orientation to Learning highlights that adult learning is problem-centered rather than subject-centered.",
+                learningObjective: "Recall Knowles' principle of Orientation to Learning."
+            },
+            {
+                id: 16,
+                type: "identification",
+                difficulty: "Easy",
+                concept: "WIIFM",
+                question: "What key acronym represents the question adults constantly ask: 'What's In It For Me?'",
+                correctAnswer: "wiifm",
+                explanation: "WIIFM stands for 'What's In It For Me?'. Adults need to know why the content matters to them.",
+                learningObjective: "Recall the acronym WIIFM and its meaning."
+            },
+            {
+                id: 17,
+                type: "mcq",
+                difficulty: "Application",
+                concept: "WIIFM In Practice",
+                question: "Which opening statement represents a STRONG WIIFM hook for adult learners?",
+                options: [
+                    "'Today we are going to read 40 pages about workplace communication protocols.'",
+                    "'By the end of this session, you'll be able to handle difficult workplace conversations without turning them into unnecessary drama.'",
+                    "'This session is required by HR compliance so please pay attention.'",
+                    "'Communication is chapter 3 in your manual.'"
+                ],
+                correctAnswer: 1,
+                explanation: "A strong WIIFM directly links learning to personal benefit and solving a real workplace headache.",
+                learningObjective: "Draft and identify effective WIIFM hooks."
+            },
+            {
+                id: 18,
+                type: "mcq",
+                difficulty: "Scenario",
+                concept: "Barriers to Adult Learning",
+                question: "When a learner struggles or exhibits resistance in class, what should a good trainer ask instead of saying 'This learner isn't interested'?",
+                options: [
+                    "'Why is this learner breaking my rules?'",
+                    "'What might be getting in the way of learning?'",
+                    "'How quickly can I remove this learner from the room?'",
+                    "'Why didn't they read the textbook before coming?'"
+                ],
+                correctAnswer: 1,
+                explanation: "Rather than dismissing a learner, effective trainers investigate barriers: 'What might be getting in the way of learning?'",
+                learningObjective: "Analyze learner resistance through the lens of learning barriers."
+            },
+            {
+                id: 19,
+                type: "fill_in_blank",
+                difficulty: "Moderate",
+                concept: "Barriers to Adult Learning",
+                question: "Fear of failure, information overload, and lack of relevance are examples of ____________ to adult learning.",
+                correctAnswer: "barriers",
+                explanation: "These factors represent common psychological and structural barriers that impede adult learning.",
+                learningObjective: "Identify key internal and external barriers to learning."
+            },
+            {
+                id: 20,
+                type: "mcq",
+                difficulty: "Easy",
+                concept: "Learning Preferences",
+                question: "Which four commonly discussed learning preferences are introduced in Day 1?",
+                options: [
+                    "Visual, Auditory, Reading/Writing, Kinesthetic",
+                    "Passive, Active, Emotional, Digital",
+                    "Theoretical, Analytical, Technical, Practical",
+                    "Individual, Group, Virtual, Physical"
+                ],
+                correctAnswer: 0,
+                explanation: "The four traditional preferences listed in Day 1 are Visual, Auditory, Reading/Writing, and Kinesthetic (VARK).",
+                learningObjective: "List the 4 core learning preferences."
+            },
+            {
+                id: 21,
+                type: "reorder",
+                difficulty: "Moderate",
+                concept: "Multi-Method Delivery",
+                question: "Order the 5-step multi-method instructional sequence recommended for effective trainers.",
+                options: [
+                    "Discuss",
+                    "Explain",
+                    "Reflect",
+                    "Show",
+                    "Practice"
+                ],
+                correctAnswer: [
+                    "Explain",
+                    "Show",
+                    "Discuss",
+                    "Practice",
+                    "Reflect"
+                ],
+                explanation: "The ideal instructional blend presented is: Explain -> Show -> Discuss -> Practice -> Reflect.",
+                learningObjective: "Sequence multi-method delivery steps for holistic skill building."
+            },
+            {
+                id: 22,
+                type: "dropdown",
+                difficulty: "Moderate",
+                concept: "Helping Learners Remember",
+                question: "Select the strategy described: 'Ask learners to recall information actively instead of simply rereading it.'",
+                options: ["Spacing", "Retrieval Practice", "Storytelling", "Application"],
+                correctAnswer: "Retrieval Practice",
+                explanation: "Retrieval practice forces mental effort to recall concepts from memory, strengthening neural retention pathways.",
+                learningObjective: "Identify retention techniques that boost long-term memory."
+            },
+            {
+                id: 23,
+                type: "fill_in_blank",
+                difficulty: "Easy",
+                concept: "Helping Learners Remember",
+                question: "Reviewing information periodically over time to boost memory retention is known as ____________.",
+                correctAnswer: "spacing",
+                explanation: "Spacing involves distributing learning and review across time intervals to prevent forgetting.",
+                learningObjective: "Define the spacing strategy for learning retention."
+            },
+            {
+                id: 24,
+                type: "correct_sentence",
+                difficulty: "Moderate",
+                concept: "Big Lesson of Day 1",
+                question: "Correct the bold term in statement: 'Training is primarily about how much **information the trainer can speak** during class.'",
+                options: [
+                    "what the learner can understand, practice, remember, and do",
+                    "how fast the slides are presented",
+                    "how many pages of handouts are printed",
+                    "how long the lecture lasts"
+                ],
+                correctAnswer: "what the learner can understand, practice, remember, and do",
+                explanation: "The fundamental mindset shift of Day 1 is that training is NOT about how much the trainer says, but what the learner can understand, practice, remember, and do.",
+                learningObjective: "Articulate the overarching mindset shift of professional training."
+            },
+            {
+                id: 25,
+                type: "mcq",
+                difficulty: "Challenging",
+                concept: "Day 1 Memory Map",
+                question: "Tracing the Day 1 Memory Map flow, what directly connects ADULT LEARNING to PERFORMANCE?",
+                options: [
+                    "Experience -> Relevance -> Motivation -> Application -> Engagement -> Retention",
+                    "Lecture -> Homework -> Exam -> Grading",
+                    "PowerPoint -> Reading -> Silence -> Test",
+                    "Design -> Develop -> Slide Count -> Certificate"
+                ],
+                correctAnswer: 0,
+                explanation: "The Memory Map details: Adult Learning (Experience -> Relevance -> Motivation -> Application) leads to Engagement -> Retention -> Performance.",
+                learningObjective: "Recall the systemic flow of learning from adult factors to performance output."
+            },
+            {
+                id: 26,
+                type: "identification",
+                difficulty: "Moderate",
+                concept: "Retention Strategies",
+                question: "Which retention strategy connects abstract concepts to memorable real-life scenarios?",
+                correctAnswer: "storytelling",
+                explanation: "Storytelling grounds abstract principles in narrative contexts, making them far easier to retain.",
+                learningObjective: "Apply storytelling as an instructional retention mechanism."
+            },
+            {
+                id: 27,
+                type: "mcq",
+                difficulty: "Scenario",
+                concept: "Mindset & Execution",
+                question: "Trainer Alex delivers a 90-minute uninterrupted presentation with 80 slides. Learners remain quiet. Alex assumes 'They learned everything because nobody asked questions.' What mistake is Alex making?",
+                options: [
+                    "Confusing information delivery with learning and performance.",
+                    "Following the ADDIE cycle too strictly.",
+                    "Applying too much retrieval practice.",
+                    "Focusing too heavily on kinesthetic learning."
+                ],
+                correctAnswer: 0,
+                explanation: "Alex is falling into the trap of assuming Information = Learning = Performance. Giving information is not learning.",
+                learningObjective: "Critique flawed training delivery using Day 1 principles."
+            },
+            {
+                id: 28,
+                type: "dropdown",
+                difficulty: "Easy",
+                concept: "Trainer Quality",
+                question: "Select the quality: 'Changing your approach when learners need something different.'",
+                options: ["Confidence", "Adaptability", "Empathy", "Focus"],
+                correctAnswer: "Adaptability",
+                explanation: "Adaptability allows trainers to pivot their style or activity when learners struggle or require a different approach.",
+                learningObjective: "Recognize adaptability in training execution."
+            },
+            {
+                id: 29,
+                type: "fill_in_blank",
+                difficulty: "Easy",
+                concept: "Day 1 Takeaway",
+                question: "A great trainer doesn't simply transfer information. A great trainer creates the ____________ for people to learn, practice, remember, and perform.",
+                correctAnswer: "conditions",
+                explanation: "The Day 1 Takeaway emphasizes that great trainers create the conditions for learning rather than just dumping facts.",
+                learningObjective: "Recall the core takeaway of Day 1."
+            },
+            {
+                id: 30,
+                type: "mcq",
+                difficulty: "Challenging",
+                concept: "Synthesis & Application",
+                question: "You notice adult trainees looking distracted during a technical compliance lecture. What is the BEST immediate action grounded in Day 1 principles?",
+                options: [
+                    "Tell them compliance is mandatory and continue reading slides.",
+                    "Pause, state a clear WIIFM hook, and transition to a discussion or practical exercise.",
+                    "Give an unexpected drop-quiz to punish inattention.",
+                    "Speed up the presentation so class finishes early."
+                ],
+                correctAnswer: 1,
+                explanation: "Re-engaging adults requires establishing relevance (WIIFM) and switching to active methods (Discuss / Practice / Reflect).",
+                learningObjective: "Synthesize adult learning principles to resolve classroom engagement issues."
+            }
+        ];
+
+        /* -------------------------------------------------------------------------
+           2. STATE MANAGEMENT
+           ------------------------------------------------------------------------- */
+        let state = {
+            studentName: "",
+            studentEmail: "",
+            currentQIndex: 0,
+            userAnswers: {}, // { qId: answerValue }
+            timeRemaining: 1800, // 30 minutes in seconds
+            timerInterval: null,
+            examStarted: false,
+            examSubmitted: false,
+            startTime: null,
+            endTime: null,
+            reorderState: {} // temporary drag/order state per question
+        };
+
+        /* -------------------------------------------------------------------------
+           3. DOM ELEMENTS
+           ------------------------------------------------------------------------- */
+        const screenRegistration = document.getElementById('screenRegistration');
+        const screenAssessment = document.getElementById('screenAssessment');
+        const screenResults = document.getElementById('screenResults');
+
+        const inputFullName = document.getElementById('inputFullName');
+        const inputEmail = document.getElementById('inputEmail');
+        const btnStartExam = document.getElementById('btnStartExam');
+        const startBtnHint = document.getElementById('startBtnHint');
+
+        const userBadgeHeader = document.getElementById('userBadgeHeader');
+        const headerStudentName = document.getElementById('headerStudentName');
+
+        /* -------------------------------------------------------------------------
+           4. INITIALIZATION & REGISTRATION VALIDATION
+           ------------------------------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            inputFullName.addEventListener('input', validateRegistration);
+            inputEmail.addEventListener('input', validateRegistration);
+        });
+
+        function validateRegistration() {
+            const nameValid = inputFullName.value.trim().length >= 2;
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail.value.trim());
+
+            if (nameValid && emailValid) {
+                btnStartExam.disabled = false;
+                btnStartExam.className = "w-full sm:w-auto px-10 py-4 bg-brandPink hover:bg-brandPinkHover text-white font-bold text-base rounded-xl cursor-pointer shadow-lg shadow-pink-200 transition-all duration-200 flex items-center justify-center gap-3 mx-auto transform hover:-translate-y-0.5";
+                startBtnHint.textContent = "Ready to start! Click the button above to unlock the exam.";
+                startBtnHint.className = "text-xs text-emerald-600 font-semibold mt-2";
+            } else {
+                btnStartExam.disabled = true;
+                btnStartExam.className = "w-full sm:w-auto px-10 py-4 bg-slate-300 text-slate-500 font-bold text-base rounded-xl cursor-not-allowed shadow-none transition-all duration-200 flex items-center justify-center gap-3 mx-auto";
+                startBtnHint.textContent = "Please fill in your full name and official email address to enable the start button.";
+                startBtnHint.className = "text-xs text-slate-400 mt-2";
+            }
+        }
+
+        function toggleReviewer() {
+            const reviewerContent = document.getElementById('reviewerContent');
+            const reviewerIcon = document.getElementById('reviewerIcon');
+            if (reviewerContent.classList.contains('hidden')) {
+                reviewerContent.classList.remove('hidden');
+                reviewerIcon.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+            } else {
+                reviewerContent.classList.add('hidden');
+                reviewerIcon.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+            }
+        }
+
+        /* -------------------------------------------------------------------------
+           5. START EXAM & TIMER LOGIC
+           ------------------------------------------------------------------------- */
+        function startExam() {
+            state.studentName = inputFullName.value.trim();
+            state.studentEmail = inputEmail.value.trim();
+            state.startTime = new Date();
+            state.examStarted = true;
+
+            // Update Header
+            headerStudentName.textContent = state.studentName;
+            userBadgeHeader.classList.remove('hidden');
+
+            // Switch Screens
+            screenRegistration.classList.add('hidden');
+            screenAssessment.classList.remove('hidden');
+
+            // Initialize Question Palette & First Question
+            renderPalette();
+            loadQuestion(0);
+
+            // Start Timer (30 mins = 1800s)
+            startTimer();
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            state.timerInterval = setInterval(() => {
+                state.timeRemaining--;
+                updateTimerDisplay();
+
+                if (state.timeRemaining <= 0) {
+                    clearInterval(state.timerInterval);
+                    alert("⏰ Time has expired! Your exam will now be automatically submitted.");
+                    autoSubmitExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(state.timeRemaining / 60);
+            const seconds = state.timeRemaining % 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Low time warning (< 5 minutes)
+            if (state.timeRemaining <= 300) {
+                timerDisplay.parentElement.classList.remove('bg-slate-900');
+                timerDisplay.parentElement.classList.add('bg-rose-600', 'animate-pulse');
+            }
+        }
+
+        /* -------------------------------------------------------------------------
+           6. QUESTION RENDERING ENGINE
+           ------------------------------------------------------------------------- */
+        function loadQuestion(index) {
+            state.currentQIndex = index;
+            const q = questionsData[index];
+
+            // Update Header Labels & Progress
+            document.getElementById('currentQNum').textContent = index + 1;
+            document.getElementById('totalQNum').textContent = questionsData.length;
+            document.getElementById('qTypeBadge').textContent = formatTypeLabel(q.type);
+            document.getElementById('qDifficultyBadge').textContent = q.difficulty;
+            document.getElementById('qConceptLabel').textContent = `Concept: ${q.concept}`;
+            document.getElementById('qIdText').textContent = `Q${q.id}`;
+            document.getElementById('qText').textContent = `${index + 1}. ${q.question}`;
+
+            // Progress Bar
+            const progressPct = ((index + 1) / questionsData.length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPct}%`;
+
+            // Navigation Buttons
+            document.getElementById('btnPrevQ').disabled = (index === 0);
+            document.getElementById('btnPrevQ').style.opacity = (index === 0) ? '0.5' : '1';
+
+            if (index === questionsData.length - 1) {
+                document.getElementById('btnNextQ').classList.add('hidden');
+                document.getElementById('btnSubmitTrigger').classList.remove('hidden');
+            } else {
+                document.getElementById('btnNextQ').classList.remove('hidden');
+            }
+
+            // Render Interactive Area based on type
+            const container = document.getElementById('interactiveArea');
+            container.innerHTML = '';
+
+            const currentAns = state.userAnswers[q.id];
+
+            if (q.type === 'mcq') {
+                q.options.forEach((opt, optIdx) => {
+                    const isChecked = currentAns === optIdx;
+                    const optBtn = document.createElement('div');
+                    optBtn.className = `p-4 rounded-xl border-2 transition cursor-pointer flex items-center gap-3 ${isChecked ? 'border-brandPink bg-pink-50/50 text-slate-900 font-semibold' : 'border-slate-200 hover:border-slate-300 text-slate-700'}`;
+                    optBtn.onclick = () => saveAnswer(q.id, optIdx);
+                    optBtn.innerHTML = `
+                        <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center ${isChecked ? 'border-brandPink bg-brandPink text-white' : 'border-slate-300'}">
+                            ${isChecked ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                        </div>
+                        <span class="text-sm">${opt}</span>
+                    `;
+                    container.appendChild(optBtn);
+                });
+            } else if (q.type === 'fill_in_blank' || q.type === 'identification') {
+                const val = currentAns || '';
+                container.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold text-slate-500">Type your answer below:</label>
+                        <input type="text" id="inputAnswerText" value="${val}" oninput="saveAnswer(${q.id}, this.value)" 
+                            class="w-full p-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brandPink focus:border-brandPink outline-none text-sm" 
+                            placeholder="Type response here...">
+                    </div>
+                `;
+            } else if (q.type === 'dropdown' || q.type === 'correct_sentence') {
+                const selectedVal = currentAns || '';
+                let optionsHtml = `<option value="" disabled ${selectedVal === '' ? 'selected' : ''}>-- Select Correct Option --</option>`;
+                q.options.forEach(opt => {
+                    optionsHtml += `<option value="${opt}" ${selectedVal === opt ? 'selected' : ''}>${opt}</option>`;
+                });
+                container.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold text-slate-500">Select the correct choice from the dropdown:</label>
+                        <select onchange="saveAnswer(${q.id}, this.value)" class="w-full p-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brandPink focus:border-brandPink outline-none text-sm bg-white">
+                            ${optionsHtml}
+                        </select>
+                    </div>
+                `;
+            } else if (q.type === 'reorder') {
+                // Initialize reorder array if not present
+                if (!state.reorderState[q.id]) {
+                    state.reorderState[q.id] = [...(currentAns || q.options)];
+                }
+                const items = state.reorderState[q.id];
+                const listDiv = document.createElement('div');
+                listDiv.className = 'space-y-2';
+
+                items.forEach((itemText, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'reorder-item p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center text-sm font-medium text-slate-700';
+                    row.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-pink-100 text-brandPink text-xs flex items-center justify-center font-bold">${idx + 1}</span>
+                            <span>${itemText}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            ${idx > 0 ? `<button onclick="moveReorderItem(${q.id}, ${idx}, -1)" class="p-1.5 text-slate-400 hover:text-slate-700 rounded"><i class="fa-solid fa-arrow-up"></i></button>` : ''}
+                            ${idx < items.length - 1 ? `<button onclick="moveReorderItem(${q.id}, ${idx}, 1)" class="p-1.5 text-slate-400 hover:text-slate-700 rounded"><i class="fa-solid fa-arrow-down"></i></button>` : ''}
+                        </div>
+                    `;
+                    listDiv.appendChild(row);
+                });
+
+                container.appendChild(listDiv);
+                // Save current order as answer
+                saveAnswer(q.id, items, false);
+            }
+
+            renderPalette();
+        }
+
+        function formatTypeLabel(type) {
+            switch(type) {
+                case 'mcq': return 'Multiple Choice';
+                case 'fill_in_blank': return 'Fill in the Blank';
+                case 'identification': return 'Identification';
+                case 'dropdown': return 'Dropdown Selection';
+                case 'correct_sentence': return 'Correct Sentence';
+                case 'reorder': return 'Drag & Drop / Reorder';
+                default: return 'Question';
+            }
+        }
+
+        function moveReorderItem(qId, index, direction) {
+            const arr = state.reorderState[qId];
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= arr.length) return;
+
+            const temp = arr[index];
+            arr[index] = arr[targetIndex];
+            arr[targetIndex] = temp;
+
+            saveAnswer(qId, arr);
+            loadQuestion(state.currentQIndex);
+        }
+
+        /* -------------------------------------------------------------------------
+           7. ANSWER TRACKING & PALETTE LOGIC
+           ------------------------------------------------------------------------- */
+        function saveAnswer(qId, value, reRenderPalette = true) {
+            if (typeof value === 'string') {
+                if (value.trim() === '') {
+                    delete state.userAnswers[qId];
+                } else {
+                    state.userAnswers[qId] = value;
+                }
+            } else {
+                state.userAnswers[qId] = value;
+            }
+
+            if (reRenderPalette) {
+                renderPalette();
+            }
+        }
+
+        function navigateQuestion(direction) {
+            const newIndex = state.currentQIndex + direction;
+            if (newIndex >= 0 && newIndex < questionsData.length) {
+                loadQuestion(newIndex);
+            }
+        }
+
+        function renderPalette() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = '';
+
+            let answeredCount = 0;
+
+            questionsData.forEach((q, idx) => {
+                const isAnswered = state.userAnswers.hasOwnProperty(q.id);
+                if (isAnswered) answeredCount++;
+
+                const isCurrent = idx === state.currentQIndex;
+
+                const btn = document.createElement('button');
+                btn.onclick = () => loadQuestion(idx);
+                btn.textContent = idx + 1;
+
+                let classes = "w-9 h-9 rounded-lg text-xs font-bold transition flex items-center justify-center ";
+
+                if (isCurrent) {
+                    classes += "border-2 border-slate-900 bg-white text-slate-900 shadow-sm ";
+                } else if (isAnswered) {
+                    classes += "bg-brandPink text-white hover:bg-brandPinkHover ";
+                } else {
+                    classes += "bg-slate-100 text-slate-600 hover:bg-slate-200 ";
+                }
+
+                btn.className = classes;
+                grid.appendChild(btn);
+            });
+
+            document.getElementById('paletteAnsweredCount').textContent = answeredCount;
+        }
+
+        /* -------------------------------------------------------------------------
+           8. SUBMISSION & EVALUATION ENGINE
+           ------------------------------------------------------------------------- */
+        function openSubmitModal() {
+            const answered = Object.keys(state.userAnswers).length;
+            const unanswered = questionsData.length - answered;
+            
+            document.getElementById('modalAnswered').textContent = answered;
+            document.getElementById('modalUnanswered').textContent = unanswered;
+
+            const minutes = Math.floor(state.timeRemaining / 60);
+            const seconds = state.timeRemaining % 60;
+            document.getElementById('modalTime').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            document.getElementById('submitModal').classList.remove('hidden');
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').classList.add('hidden');
+        }
+
+        function confirmSubmitExam() {
+            closeSubmitModal();
+            processFinalSubmission();
+        }
+
+        function autoSubmitExam() {
+            processFinalSubmission();
+        }
+
+        function processFinalSubmission() {
+            clearInterval(state.timerInterval);
+            state.endTime = new Date();
+            state.examSubmitted = true;
+
+            // Evaluate Answers
+            let score = 0;
+            const detailedResults = [];
+
+            questionsData.forEach(q => {
+                const userAns = state.userAnswers[q.id];
+                let isCorrect = false;
+
+                if (q.type === 'mcq') {
+                    isCorrect = (userAns === q.correctAnswer);
+                } else if (q.type === 'fill_in_blank' || q.type === 'identification') {
+                    if (typeof userAns === 'string') {
+                        isCorrect = (userAns.trim().toLowerCase() === q.correctAnswer.toLowerCase());
+                    }
+                } else if (q.type === 'dropdown' || q.type === 'correct_sentence') {
+                    isCorrect = (userAns === q.correctAnswer);
+                } else if (q.type === 'reorder') {
+                    if (Array.isArray(userAns)) {
+                        isCorrect = JSON.stringify(userAns) === JSON.stringify(q.correctAnswer);
+                    }
+                }
+
+                if (isCorrect) score++;
+
+                detailedResults.push({
+                    question: q,
+                    userAnswer: userAns,
+                    isCorrect: isCorrect
+                });
+            });
+
+            const total = questionsData.length;
+            const percentage = Math.round((score / total) * 100);
+            const timeDiffSeconds = Math.round((state.endTime - state.startTime) / 1000);
+            const minutesTaken = Math.floor(timeDiffSeconds / 60);
+            const secondsTaken = timeDiffSeconds % 60;
+            const timeTakenFormatted = `${minutesTaken}m ${secondsTaken}s`;
+
+            // Auto-Submit Payload via Fetch API (FormSubmit.co silently to mariaeftongga@gmail.com)
+            sendAutomatedEmailResults(score, total, percentage, timeTakenFormatted);
+
+            // Render Score Report & Switch Screen
+            renderScoreReport(score, total, percentage, timeTakenFormatted, detailedResults);
+
+            screenAssessment.classList.add('hidden');
+            screenResults.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* -------------------------------------------------------------------------
+           9. AUTOMATED EMAIL LOGGING (mariaeftongga@gmail.com)
+           ------------------------------------------------------------------------- */
+        function sendAutomatedEmailResults(score, total, percentage, timeTaken) {
+            const endpoint = "https://formsubmit.co/ajax/mariaeftongga@gmail.com";
+
+            const payload = {
+                _subject: `Train the Trainer Day 1 Exam Result: ${state.studentName} (${score}/${total})`,
+                Student_Name: state.studentName,
+                Student_Email: state.studentEmail,
+                Course_Title: "TRAIN THE TRAINER - DAY 1",
+                Session: "Session 1 - Understand the Trainer",
+                Score: `${score} / ${total}`,
+                Percentage: `${percentage}%`,
+                Status: score >= 30 ? "PASS" : "NEEDS REVIEW",
+                Time_Taken: timeTaken,
+                Submission_Date: new Date().toLocaleString()
+            };
+
+            fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Automated email dispatch successful:", data);
+            })
+            .catch(err => {
+                console.warn("Background email submission attempt failed or blocked:", err);
+            });
+        }
+
+        /* -------------------------------------------------------------------------
+           10. SCORE REPORT & DETAILED REVIEW RENDERER
+           ------------------------------------------------------------------------- */
+        function renderScoreReport(score, total, percentage, timeTaken, detailedResults) {
+            document.getElementById('reportStudentName').textContent = state.studentName;
+            document.getElementById('reportStudentEmail').textContent = state.studentEmail;
+            document.getElementById('reportTimeTaken').textContent = timeTaken;
+            document.getElementById('reportScore').textContent = score;
+            document.getElementById('reportPercentage').textContent = `${percentage}%`;
+            document.getElementById('reportCorrect').textContent = score;
+            document.getElementById('reportIncorrect').textContent = total - score;
+
+            const passBadge = document.getElementById('passFailBadge');
+            if (score >= 30) {
+                passBadge.textContent = "PASS";
+                passBadge.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase bg-emerald-100 text-emerald-800";
+            } else {
+                passBadge.textContent = "NEEDS REVIEW";
+                passBadge.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase bg-amber-100 text-amber-800";
+            }
+
+            // Render Detailed Review Items
+            const container = document.getElementById('detailedReviewContainer');
+            container.innerHTML = '';
+
+            detailedResults.forEach((item, idx) => {
+                const q = item.question;
+                const isCorrect = item.isCorrect;
+                const userAns = item.userAnswer;
+
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-6 border-2 card-shadow space-y-4 ${isCorrect ? 'border-emerald-200' : 'border-rose-200'}`;
+
+                // Header status
+                let statusBadge = isCorrect 
+                    ? `<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold"><i class="fa-solid fa-check"></i> Correct</span>`
+                    : `<span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold"><i class="fa-solid fa-xmark"></i> Incorrect</span>`;
+
+                if (userAns === undefined) {
+                    statusBadge = `<span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold"><i class="fa-solid fa-minus"></i> Unanswered</span>`;
+                }
+
+                // Format answers display
+                let userAnsText = formatAnsDisplay(q, userAns);
+                let correctAnsText = formatAnsDisplay(q, q.correctAnswer);
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start gap-4 border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 text-sm">Question ${idx + 1}</span>
+                            <span class="text-xs text-slate-400">(${q.difficulty} • ${q.concept})</span>
+                        </div>
+                        ${statusBadge}
+                    </div>
+
+                    <p class="font-semibold text-slate-800 text-sm">${q.question}</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
+                        <div class="p-3 rounded-xl ${isCorrect ? 'bg-emerald-50 text-emerald-900 border border-emerald-100' : 'bg-rose-50 text-rose-900 border border-rose-100'}">
+                            <span class="font-bold block mb-1">Your Submission:</span>
+                            <span>${userAnsText}</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 text-slate-800 border border-slate-200">
+                            <span class="font-bold block mb-1">Correct Answer:</span>
+                            <span>${correctAnsText}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+                        <span class="font-bold text-brandPink flex items-center gap-1">
+                            <i class="fa-solid fa-lightbulb"></i> Instructional Explanation:
+                        </span>
+                        <p class="text-slate-600 leading-relaxed">${q.explanation}</p>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function formatAnsDisplay(q, ans) {
+            if (ans === undefined || ans === null || ans === '') return '<em>No answer provided.</em>';
+
+            if (q.type === 'mcq') {
+                return q.options[ans] || ans;
+            } else if (q.type === 'reorder') {
+                if (Array.isArray(ans)) {
+                    return ans.map((item, i) => `${i + 1}. ${item}`).join('<br>');
+                }
+            }
+            return ans;
+        }
+
+        /* -------------------------------------------------------------------------
+           11. MISC UTILITIES
+           ------------------------------------------------------------------------- */
+        function scrollToReview() {
+            document.getElementById('reviewSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function confirmRetake() {
+            if (confirm("Are you sure you want to retake the test? Your current progress will be reset.")) {
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
